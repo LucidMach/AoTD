@@ -1,3 +1,4 @@
+import { colors } from "@/constants/Colors";
 import { View, Text } from "react-native";
 
 export default function HomeScreen() {
@@ -7,10 +8,15 @@ export default function HomeScreen() {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fff",
+        backgroundColor: colors.dark.background,
       }}
     >
-      <Text>Hi</Text>
+      <Text style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}>
+        Hi
+      </Text>
+      <Text style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}>
+        Hi
+      </Text>
     </View>
   );
 }

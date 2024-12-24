@@ -31,6 +31,20 @@
           "resizeMode": "contain",
           "backgroundColor": "#1a1a1a"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/JustAnotherHand-Regular.ttf",
+            "./assets/fonts/Comfortaa-Regular.ttf",
+            "./assets/fonts/Comfortaa-Bold.ttf",
+            "./assets/fonts/Comfortaa-Light.ttf",
+            "./assets/fonts/Comfortaa-Medium.ttf",
+            "./assets/fonts/Comfortaa-SemiBold.ttf",
+            "./assets/fonts/Comfortaa-ExtraBold.ttf"
+          ]
+        }
       ]
     ],
     "experiments": {
