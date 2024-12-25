@@ -1,8 +1,10 @@
 import OnBoard from "@/components/OnBoard";
 import { colors } from "@/constants/Colors";
+import { useState } from "react";
 import { View, Text, Modal } from "react-native";
 
 export default function HomeScreen() {
+  const [onboard, setOnboard] = useState<boolean>(true);
   return (
     <View
       style={{
@@ -18,9 +20,11 @@ export default function HomeScreen() {
       <Text style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}>
         Hi
       </Text> */}
-      <Modal>
-        <OnBoard />
-      </Modal>
+      {onboard && (
+        <Modal>
+          <OnBoard setOnboard={setOnboard} />
+        </Modal>
+      )}
     </View>
   );
 }

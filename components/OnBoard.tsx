@@ -39,7 +39,11 @@ const pages = [
   },
 ];
 
-export default function OnBoard() {
+interface Props {
+  setOnboard: (value: boolean) => void;
+}
+
+const OnBoard: React.FC<Props> = ({ setOnboard }) => {
   const x = useSharedValue(0);
   const flatListIndex = useSharedValue(0);
   const flatListRef = useAnimatedRef<
@@ -95,11 +99,12 @@ export default function OnBoard() {
           currentIndex={flatListIndex}
           length={pages.length}
           flatListRef={flatListRef}
+          setOnboard={setOnboard}
         />
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -113,3 +118,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
+
+export default OnBoard;

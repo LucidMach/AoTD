@@ -13,10 +13,16 @@ interface Props {
   currentIndex: SharedValue<number>;
   length: number;
   flatListRef: any;
+  setOnboard: (value: boolean) => void;
 }
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const Button: React.FC<Props> = ({ currentIndex, length, flatListRef }) => {
+const Button: React.FC<Props> = ({
+  currentIndex,
+  length,
+  flatListRef,
+  setOnboard,
+}) => {
   const rnBtnStyle = useAnimatedStyle(() => {
     return {
       width:
@@ -53,7 +59,7 @@ const Button: React.FC<Props> = ({ currentIndex, length, flatListRef }) => {
 
   const onPress = useCallback(() => {
     if (currentIndex.value === length - 1) {
-      console.log("Get Started");
+      setOnboard(false);
       return;
     } else {
       flatListRef?.current?.scrollToIndex({
