@@ -1,5 +1,6 @@
+import OnBoard from "@/components/OnBoard";
 import { colors } from "@/constants/Colors";
-import { View, Text } from "react-native";
+import { View, Text, Modal } from "react-native";
 
 export default function HomeScreen() {
   return (
@@ -11,12 +12,15 @@ export default function HomeScreen() {
         backgroundColor: colors.dark.background,
       }}
     >
-      <Text style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}>
+      {/* <Text style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}>
         Hi
       </Text>
       <Text style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}>
         Hi
-      </Text>
+      </Text> */}
+      <Modal>
+        <OnBoard />
+      </Modal>
     </View>
   );
 }
