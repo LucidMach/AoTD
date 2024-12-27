@@ -5,6 +5,7 @@ import { View, Text, Modal } from "react-native";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
+
   return (
     <View
       style={{
@@ -14,12 +15,12 @@ export default function HomeScreen() {
         backgroundColor: colors.dark.background,
       }}
     >
-      {/* <Text style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}>
+      <Text style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}>
         Hi
       </Text>
       <Text style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}>
         Hi
-      </Text> */}
+      </Text>
       {onboard && (
         <Modal>
           <OnBoard setOnboard={setOnboard} />

@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import ListItem from "./ListItem";
 import PaginationElement from "./PaginationElement";
-import Button from "./Button";
+import Button from "./PagiButton";
 import { colors } from "@/constants/Colors";
 
 const pages = [
@@ -32,10 +32,6 @@ const pages = [
   {
     text: "reflect on the most memorable moment of the day",
     image: require("../assets/images/sleep.png"),
-  },
-  {
-    text: "daily adventures",
-    image: require("../assets/images/icons/adaptive-icon.png"),
   },
 ];
 

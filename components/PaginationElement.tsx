@@ -4,12 +4,13 @@ import Animated, {
   Extrapolation,
   interpolate,
   interpolateColor,
+  SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
 
 type Props = {
   length: number;
-  x: Animated.SharedValue<number>;
+  x: SharedValue<number>;
 };
 
 const PaginationElement = ({ length, x }: Props) => {

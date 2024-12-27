@@ -6,7 +6,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import Svg, { Path } from "react-native-svg";
+import { useRouter } from "expo-router";
 import { colors } from "@/constants/Colors";
 
 interface Props {
@@ -23,6 +23,8 @@ const Button: React.FC<Props> = ({
   flatListRef,
   setOnboard,
 }) => {
+  const router = useRouter();
+
   const rnBtnStyle = useAnimatedStyle(() => {
     return {
       width:
@@ -60,6 +62,7 @@ const Button: React.FC<Props> = ({
   const onPress = useCallback(() => {
     if (currentIndex.value === length - 1) {
       setOnboard(false);
+      router.replace("/(tabs)/settings");
       return;
     } else {
       flatListRef?.current?.scrollToIndex({
@@ -71,7 +74,7 @@ const Button: React.FC<Props> = ({
   return (
     <AnimatedPressable style={[styles.container, rnBtnStyle]} onPress={onPress}>
       <Animated.Text style={[styles.textStyle, rnTextStyle]}>
-        play now
+        START
       </Animated.Text>
       <Animated.Image
         source={require("../assets/images/icons/rightArrow.png")}
