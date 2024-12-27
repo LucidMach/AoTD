@@ -1,12 +1,8 @@
-import OnBoard from "@/components/OnBoard";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/Colors";
-import { useState } from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text } from "react-native";
 
-export default function HomeScreen() {
-  const [onboard, setOnboard] = useState<boolean>(true);
-
+export default function Streak() {
   return (
     <View
       style={{
@@ -16,22 +12,17 @@ export default function HomeScreen() {
         backgroundColor: colors.dark.background,
       }}
     >
-      {onboard && (
-        <Modal>
-          <OnBoard setOnboard={setOnboard} />
-        </Modal>
-      )}
       <TopBar />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text
           style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
         >
-          Hi
+          streak
         </Text>
         <Text
           style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
         >
-          Hi
+          rules
         </Text>
       </View>
     </View>
