@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, View } from "react-native";
 import * as Notifications from "expo-notifications";
 
 import { colors } from "@/constants/Colors";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import schedulePushNotification from "@/hooks/schedulePushNotification";
 import useNotifications from "@/hooks/useNotifications";
 
@@ -72,14 +72,18 @@ const TimeButton: React.FC<Props> = ({
         </Text>
       </TouchableOpacity>
       {clicked ? (
-        <RNDateTimePicker
+        <DateTimePicker
           mode="time"
           display="spinner"
           value={time || new Date()}
           onChange={async (event, selectedDate) => {
-            setTime(selectedDate || time);
+            setTime(selectedDate);
             setClicked(false);
-            await schedulePushNotification(notificationTitle, notificationBody);
+            await schedulePushNotification(
+              notificationTitle,
+              notificationBody,
+              selectedDate
+            );
           }}
         />
       ) : null}
