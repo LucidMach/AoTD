@@ -1,13 +1,33 @@
-import { colors } from "@/constants/Colors";
 import { useState } from "react";
 import { TouchableOpacity, Text, View } from "react-native";
+import * as Notifications from "expo-notifications";
+
+import { colors } from "@/constants/Colors";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import schedulePushNotification from "@/hooks/schedulePushNotification";
+import useNotifications from "@/hooks/useNotifications";
 
 interface Props {
   title: string;
+  notificationTitle: string;
+  notificationBody: string;
 }
 
-const TimeButton: React.FC<Props> = ({ title }) => {
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+const TimeButton: React.FC<Props> = ({
+  title,
+  notificationTitle,
+  notificationBody,
+}) => {
+  useNotifications();
+
   const [clicked, setClicked] = useState(false);
   const [time, setTime] = useState<Date>();
 
@@ -56,9 +76,10 @@ const TimeButton: React.FC<Props> = ({ title }) => {
           mode="time"
           display="spinner"
           value={time || new Date()}
-          onChange={(event, selectedDate) => {
+          onChange={async (event, selectedDate) => {
             setTime(selectedDate || time);
             setClicked(false);
+            await schedulePushNotification(notificationTitle, notificationBody);
           }}
         />
       ) : null}

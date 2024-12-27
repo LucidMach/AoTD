@@ -1,6 +1,8 @@
 import TimeButton from "@/components/TimeButton";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/Colors";
+import useNotifications from "@/hooks/useNotifications";
+
 import React from "react";
 import { View, Text, Image } from "react-native";
 
@@ -47,8 +49,16 @@ const Settings: React.FC = () => {
           </Text>
         </View>
         <View style={{ gap: 8 }}>
-          <TimeButton title="Morning Alert" />
-          <TimeButton title="Evening Alert" />
+          <TimeButton
+            title="Morning Alert"
+            notificationTitle="Choose your #AoTD"
+            notificationBody="Adventure of the Day is waiting for you"
+          />
+          <TimeButton
+            title="Evening Alert"
+            notificationTitle="Reflect on your #AoTD"
+            notificationBody="so what was the most memorable part of your day?"
+          />
         </View>
         <View style={{ alignItems: "center" }}>
           <Text
