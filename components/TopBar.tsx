@@ -13,7 +13,7 @@ const TopBar: React.FC = () => {
       style={{
         justifyContent: "space-between",
         width: "100%",
-        top: 30,
+        top: 60,
         backgroundColor: colors.dark.background,
         paddingHorizontal: 16,
         alignItems: "center",
