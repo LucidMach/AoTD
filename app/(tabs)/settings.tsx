@@ -1,12 +1,15 @@
 import TimeButton from "@/components/TimeButton";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/Colors";
-import useNotifications from "@/hooks/useNotifications";
+import schedulePushNotification from "@/hooks/schedulePushNotification";
 
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image } from "react-native";
 
 const Settings: React.FC = () => {
+  const [morningTime, setMorningTime] = useState<Date>();
+  const [eveningTime, setEveningTime] = useState<Date>();
+
   return (
     <View
       style={{
@@ -51,13 +54,25 @@ const Settings: React.FC = () => {
         <View style={{ gap: 8 }}>
           <TimeButton
             title="Morning Alert"
-            notificationTitle="Choose your #AoTD"
-            notificationBody="Adventure of the Day is waiting for you"
+            time={morningTime}
+            setTime={setMorningTime}
+            scheduler={async (selectedDate: Date) => {
+              await schedulePushNotification(
+                selectedDate,
+                eveningTime || new Date()
+              );
+            }}
           />
           <TimeButton
             title="Evening Alert"
-            notificationTitle="Reflect on your #AoTD"
-            notificationBody="so what was the most memorable part of your day?"
+            time={eveningTime}
+            setTime={setEveningTime}
+            scheduler={async (selectedDate: Date) => {
+              await schedulePushNotification(
+                morningTime || new Date(),
+                selectedDate
+              );
+            }}
           />
         </View>
         <View style={{ alignItems: "center" }}>

@@ -4,13 +4,13 @@ import * as Notifications from "expo-notifications";
 
 import { colors } from "@/constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import schedulePushNotification from "@/hooks/schedulePushNotification";
 import useNotifications from "@/hooks/useNotifications";
 
 interface Props {
   title: string;
-  notificationTitle: string;
-  notificationBody: string;
+  scheduler: (selectedDate: Date) => Promise<void>;
+  time: Date | undefined;
+  setTime: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }
 
 Notifications.setNotificationHandler({
@@ -21,15 +21,9 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const TimeButton: React.FC<Props> = ({
-  title,
-  notificationTitle,
-  notificationBody,
-}) => {
+const TimeButton: React.FC<Props> = ({ title, scheduler, time, setTime }) => {
   useNotifications();
-
   const [clicked, setClicked] = useState(false);
-  const [time, setTime] = useState<Date>();
 
   return (
     <View>
@@ -79,11 +73,7 @@ const TimeButton: React.FC<Props> = ({
           onChange={async (event, selectedDate) => {
             setTime(selectedDate);
             setClicked(false);
-            await schedulePushNotification(
-              notificationTitle,
-              notificationBody,
-              selectedDate
-            );
+            selectedDate && scheduler(selectedDate);
           }}
         />
       ) : null}

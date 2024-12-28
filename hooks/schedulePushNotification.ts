@@ -1,3 +1,4 @@
+import { notificationMSG } from "@/constants/notificationMSG";
 import * as Notifications from "expo-notifications";
 
 const secondsToNotification = (now: Date, target: Date) => {
@@ -18,28 +19,42 @@ const secondsToNotification = (now: Date, target: Date) => {
 };
 
 export default async function schedulePushNotification(
-  title: string,
-  body: string,
-  time: Date
+  morningTime: Date,
+  eveningTime: Date
 ) {
-  const timeString =
-    time.getHours().toString() + ":" + time.getMinutes().toString();
+  await Notifications.cancelAllScheduledNotificationsAsync();
 
-  await Notifications.cancelAllScheduledNotificationsAsync;
+  const morningTimeString =
+    morningTime.getHours().toString() +
+    ":" +
+    morningTime.getMinutes().toString();
+
+  const eveningTimeString =
+    eveningTime.getHours().toString() +
+    ":" +
+    eveningTime.getMinutes().toString();
+
   await Notifications.scheduleNotificationAsync({
     content: {
-      title,
-      body: timeString,
+      title: notificationMSG.morningTitle,
+      body: "morning " + morningTimeString,
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
-      hour: time.getHours(),
-      minute: time.getMinutes(),
+      hour: morningTime.getHours(),
+      minute: morningTime.getMinutes(),
     },
-    // trigger: {
-    //   type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-    //   seconds: secondsToNotification(new Date(), time),
-    //   repeat: true
-    // },
+  });
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: notificationMSG.eveningTitle,
+      body: "evening " + eveningTimeString,
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
+      hour: eveningTime.getHours(),
+      minute: eveningTime.getMinutes(),
+    },
   });
 }
