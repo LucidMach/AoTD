@@ -1,4 +1,4 @@
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 import { View, Text } from "react-native";
 
 export default function ReflectScreen() {

@@ -14,7 +14,7 @@ import Animated, {
 import ListItem from "./ListItem";
 import PaginationElement from "./PaginationElement";
 import Button from "./PagiButton";
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 
 const pages = [
   {

@@ -1,6 +1,6 @@
 import TimeButton from "@/components/TimeButton";
 import TopBar from "@/components/TopBar";
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 import schedulePushNotification from "@/hooks/schedulePushNotification";
 
 import React, { useState } from "react";

@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useRouter } from "expo-router";
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 
 interface Props {
   currentIndex: SharedValue<number>;

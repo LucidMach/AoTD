@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 interface Props {

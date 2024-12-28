@@ -1,6 +1,6 @@
 import OnBoard from "@/components/OnBoard";
 import TopBar from "@/components/TopBar";
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 import { useState } from "react";
 import { View, Text, Modal } from "react-native";
 

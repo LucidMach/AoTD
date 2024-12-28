@@ -11,7 +11,7 @@ import Animated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { colors } from "@/constants/Colors";
+import { colors } from "@/constants/colors";
 
 type Props = {
   item: { text: string; image: ImageURISource };
