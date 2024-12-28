@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { TouchableOpacity, Text, View } from "react-native";
-import * as Notifications from "expo-notifications";
 
 import { colors } from "@/constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import useNotifications from "@/hooks/useNotifications";
 
 interface Props {
   title: string;
@@ -13,16 +11,7 @@ interface Props {
   setTime: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-
 const TimeButton: React.FC<Props> = ({ title, scheduler, time, setTime }) => {
-  useNotifications();
   const [clicked, setClicked] = useState(false);
 
   return (

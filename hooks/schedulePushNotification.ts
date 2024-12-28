@@ -18,7 +18,7 @@ const secondsToNotification = (now: Date, target: Date) => {
   }
 };
 
-export default async function schedulePushNotification(
+export default async function scheduleNotification(
   morningTime: Date,
   eveningTime: Date
 ) {
@@ -37,7 +37,11 @@ export default async function schedulePushNotification(
   await Notifications.scheduleNotificationAsync({
     content: {
       title: notificationMSG.morningTitle,
-      body: "morning " + morningTimeString,
+      body: notificationMSG.morningBody,
+      // body: "morning " + morningTimeString,
+      data: {
+        url: "/prompt",
+      },
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
@@ -49,7 +53,11 @@ export default async function schedulePushNotification(
   await Notifications.scheduleNotificationAsync({
     content: {
       title: notificationMSG.eveningTitle,
-      body: "evening " + eveningTimeString,
+      body: notificationMSG.eveningBody,
+      // body: "evening " + eveningTimeString,
+      data: {
+        url: "/reflect",
+      },
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,

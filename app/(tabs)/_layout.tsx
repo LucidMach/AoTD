@@ -1,4 +1,3 @@
-import TopBar from "@/components/TopBar";
 import { Tabs } from "expo-router";
 import React from "react";
 
