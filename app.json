@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dailyAdventures",
-    "slug": "dailyAdventures",
+    "name": "aotd",
+    "slug": "adventure_of_the_day",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icons/adaptive-icon.png",
