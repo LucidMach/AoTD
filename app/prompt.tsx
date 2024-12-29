@@ -25,7 +25,7 @@ export default function PromptScreen() {
 
   // Randomize quote
   const randomTip = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const randomIndex = Math.floor(Math.random() * qoutes.length);
     return qoutes[randomIndex];
   }, []);
   return (
