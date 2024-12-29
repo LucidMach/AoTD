@@ -2,13 +2,72 @@ import TimeButton from "@/components/TimeButton";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
 import schedulePushNotification from "@/hooks/schedulePushNotification";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 
 const Settings: React.FC = () => {
   const [morningTime, setMorningTime] = useState<Date>();
   const [eveningTime, setEveningTime] = useState<Date>();
+
+  // get the morning time from async storage
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("morningTime");
+        if (value !== null) {
+          setMorningTime(new Date(parseInt(value)));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
+
+  // get the evening time from async storage
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("eveningTime");
+        if (value !== null) {
+          setEveningTime(new Date(parseInt(value)));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
+
+  // Store the morning time in async storage
+  useEffect(() => {
+    const storeData = async (value: Date) => {
+      try {
+        await AsyncStorage.setItem("morningTime", value.getTime().toString());
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    morningTime && storeData(morningTime);
+  }, [morningTime]);
+
+  // Store the evening time in async storage
+  useEffect(() => {
+    const storeData = async (value: Date) => {
+      try {
+        await AsyncStorage.setItem("eveningTime", value.getTime().toString());
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    eveningTime && storeData(eveningTime);
+  }, [eveningTime]);
 
   return (
     <View
