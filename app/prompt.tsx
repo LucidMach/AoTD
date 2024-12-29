@@ -1,4 +1,5 @@
 import { colors } from "@/constants/colors";
+import { qoutes } from "@/constants/qoutes";
 import { useMemo } from "react";
 import {
   View,
@@ -20,6 +21,12 @@ export default function PromptScreen() {
   const randomImage = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
     return backgroundImages[randomIndex];
+  }, []);
+
+  // Randomize quote
+  const randomTip = useMemo(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return qoutes[randomIndex];
   }, []);
   return (
     <SafeAreaView
@@ -46,9 +53,7 @@ export default function PromptScreen() {
                 textAlign: "center",
               }}
             />
-            <Text style={styles.smalltext}>
-              note: an adventure is anything you “want” to do today
-            </Text>
+            <Text style={styles.smalltext}>tip: {randomTip}</Text>
           </View>
         </ImageBackground>
       </View>
@@ -56,6 +61,9 @@ export default function PromptScreen() {
   );
 }
 const styles = StyleSheet.create({
+  fullcontainer: {
+    flexDirection: "column",
+  },
   container: {
     flexDirection: "column",
     paddingHorizontal: 24,
@@ -66,6 +74,18 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.26)",
     alignItems: "center",
     justifyContent: "center",
+  },
+  newcontainer: {
+    flexDirection: "column",
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderRadius: 16,
+    boxShadow:
+      "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
+    backgroundColor: "rgba(0, 0, 0, 0.26)",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 0,
   },
   image: {
     flex: 1,
