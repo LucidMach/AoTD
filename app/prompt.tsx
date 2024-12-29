@@ -53,8 +53,13 @@ export default function PromptScreen() {
                 textAlign: "center",
               }}
             />
+
+            
+          </View>
+          <View style={styles.newcontainer}>
             <Text style={styles.smalltext}>tip: {randomTip}</Text>
           </View>
+          
         </ImageBackground>
       </View>
     </SafeAreaView>

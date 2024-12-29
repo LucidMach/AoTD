@@ -1,29 +1,115 @@
 import { colors } from "@/constants/colors";
-import { View, Text } from "react-native";
+import { qoutes } from "@/constants/qoutes";
+import { useMemo } from "react";
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function ReflectScreen() {
+export default function PromptScreen() {
+  const backgroundImages = [
+    require("@/assets/images/morning/0.jpg"),
+    require("@/assets/images/morning/2.jpg"),
+    require("@/assets/images/morning/3.jpg"),
+    require("@/assets/images/morning/4.jpg"),
+    require("@/assets/images/morning/5.jpg"),
+  ];
+  const randomImage = useMemo(() => {
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    return backgroundImages[randomIndex];
+  }, []);
+
+  // Randomize quote
+  const randomTip = useMemo(() => {
+    const randomIndex = Math.floor(Math.random() * qoutes.length);
+    return qoutes[randomIndex];
+  }, []);
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: colors.dark.background,
       }}
     >
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
+        <ImageBackground
+          source={randomImage}
+          style={styles.image}
+          resizeMode="cover"
         >
-          #AoTD
-        </Text>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
-        >
-          Reflect
-        </Text>
+          <View style={styles.container}>
+            <Text style={styles.text}>How did your adventure go?</Text>
+            <Text style={styles.aotd}>this is the previous adventure</Text>
+            <Text style={styles.smalltext}>tip: {randomTip}</Text>
+          </View>
+        </ImageBackground>
       </View>
     </SafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  fullcontainer: {
+    flexDirection: "column",
+  },
+  aotd:{
+    color: "white",
+    opacity: 0.7,
+    fontSize: 18,
+    textShadowColor: "black",
+    textShadowRadius: 10,
+    fontWeight: "bold",
+    textAlign: "center",
+
+
+  },
+  container: {
+    flexDirection: "column",
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderRadius: 16,
+    boxShadow:
+      "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
+    backgroundColor: "rgba(0, 0, 0, 0.26)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  newcontainer: {
+    flexDirection: "column",
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderRadius: 16,
+    boxShadow:
+      "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
+    backgroundColor: "rgba(0, 0, 0, 0.26)",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 0,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+  },
+  smalltext: {
+    fontFamily: "ComfertaaLight",
+    color: colors.dark.text,
+    opacity: 0.7,
+    fontSize: 12,
+    textShadowColor: "black",
+    textShadowRadius: 10,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  text: {
+    color: colors.dark.text,
+    fontSize: 42,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "JustAnotherHand",
+  },
+});
