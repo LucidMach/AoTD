@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function PromptScreen() {
   const backgroundImages = [
     require("@/assets/images/morning/0.jpg"),
+
     require("@/assets/images/morning/2.jpg"),
     require("@/assets/images/morning/3.jpg"),
     require("@/assets/images/morning/4.jpg"),
