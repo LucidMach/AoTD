@@ -1,11 +1,40 @@
 import OnBoard from "@/components/OnBoard";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { View, Text, Modal } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("onboard");
+        if (value !== null) {
+          setOnboard(value === "true" ? true : false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    const storeData = async (value: boolean) => {
+      try {
+        await AsyncStorage.setItem("onboard", value.toString());
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    storeData(onboard);
+  }, [onboard]);
 
   return (
     <View
