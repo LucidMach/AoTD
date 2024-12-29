@@ -99,6 +99,17 @@ export default function HomeScreen() {
             _______________________________________
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/reflect")}>
+          <Text
+            style={{
+              marginHorizontal: 8,
+              color: colors.dark.textTint,
+              fontFamily: "ComfortaaBold",
+            }}
+          >
+            *************************************
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
