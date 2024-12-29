@@ -62,7 +62,7 @@ const Button: React.FC<Props> = ({
   const onPress = useCallback(() => {
     if (currentIndex.value === length - 1) {
       setOnboard(false);
-      router.replace("/(tabs)/settings");
+      router.push("/(tabs)/settings");
       return;
     } else {
       flatListRef?.current?.scrollToIndex({
