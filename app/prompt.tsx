@@ -1,12 +1,17 @@
 import { colors } from "@/constants/colors";
 import { useMemo } from "react";
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PromptScreen() {
   const backgroundImages = [
     require("@/assets/images/morning/0.jpg"),
-
     require("@/assets/images/morning/2.jpg"),
     require("@/assets/images/morning/3.jpg"),
     require("@/assets/images/morning/4.jpg"),
@@ -30,7 +35,17 @@ export default function PromptScreen() {
         >
           <View style={styles.container}>
             <Text style={styles.text}>What is your adventure today?</Text>
-            <Text style={styles.text}>___________________________</Text>
+            <TextInput
+              style={{
+                fontFamily: "ComfertaaLight",
+                color: colors.dark.text,
+                borderBottomWidth: 1,
+                borderColor: colors.dark.text,
+                width: 300,
+                marginBottom: 8,
+                textAlign: "center",
+              }}
+            />
             <Text style={styles.smalltext}>
               note: an adventure is anything you “want” to do today
             </Text>
@@ -61,7 +76,8 @@ const styles = StyleSheet.create({
   },
   smalltext: {
     fontFamily: "ComfertaaLight",
-    color: "white",
+    color: colors.dark.text,
+    opacity: 0.7,
     fontSize: 12,
     textShadowColor: "black",
     textShadowRadius: 10,
@@ -69,12 +85,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    color: "white",
+    color: colors.dark.text,
     fontSize: 42,
-
     fontWeight: "bold",
     textAlign: "center",
-
     fontFamily: "JustAnotherHand",
   },
 });
