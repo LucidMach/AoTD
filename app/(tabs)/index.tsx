@@ -3,9 +3,11 @@ import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
 
 import { useEffect, useState } from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, TouchableOpacity,StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
@@ -24,6 +26,7 @@ export default function HomeScreen() {
 
     getData();
   }, []);
+  
 
   useEffect(() => {
     const storeData = async (value: boolean) => {
@@ -63,7 +66,30 @@ export default function HomeScreen() {
         >
           Log
         </Text>
+        <TouchableOpacity style={styles.button} onPress={() => router.push('./prompt')}  />
       </View>
     </SafeAreaView>
   );
+  
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    width: 200,
+    height: 50,
+  },
+  countContainer: {
+    alignItems: 'center',
+    padding: 10,
+  },
+});
