@@ -20,9 +20,6 @@ export default function PromptScreen() {
     <SafeAreaView
       style={{
         flex: 1,
-       
-        
-      
       }}
     >
 
@@ -33,16 +30,11 @@ export default function PromptScreen() {
         resizeMode="cover"
         
       >
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
-        >
-          #AoTD
-        </Text>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
-        >
-          Prompt
-        </Text>
+            <View style={styles.container}>
+      <Text style={styles.text}>What is your adventure today?</Text>
+      <Text style={styles.text}>___________________________</Text>
+      <Text style={styles.smalltext}>note: an adventure is anything you “want” to do today</Text>
+    </View>
       </ImageBackground>
         
       </View>
@@ -51,8 +43,21 @@ export default function PromptScreen() {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flexDirection: "column",
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderRadius: 16,
+    boxShadow:
+      "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
+    backgroundColor:"rgba(0, 0, 0, 0.26)",
+    alignItems: "center",
+    justifyContent: "center",
+    
+    
+    
+    
+    
+  } ,
   image: {
     flex: 1,
     justifyContent: 'center',
@@ -62,12 +67,25 @@ const styles = StyleSheet.create({
     
   
   },
+  smalltext: {
+    fontFamily: "ComfertaaLight",
+    color: 'white',
+    fontSize: 12,
+    textShadowColor:"black",
+    textShadowRadius:10, 
+    fontWeight: 'bold',
+    textAlign: 'center',
+
+
+  },
   text: {
     color: 'white',
     fontSize: 42,
-    lineHeight: 84,
+    
     fontWeight: 'bold',
     textAlign: 'center',
-    backgroundColor: '#000000c0',
+   
+    fontFamily: "JustAnotherHand"
   },
+  
 });
