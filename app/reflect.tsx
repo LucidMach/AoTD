@@ -31,39 +31,41 @@ export default function PromptScreen() {
     return qoutes[randomIndex];
   }, []);
 
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}
-      >
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <ImageBackground
-            source={randomImage}
-            style={styles.image}
-            resizeMode="cover"
-          >
-            <View style={styles.container}>
-              <Text style={styles.text}>How did your adventure go?</Text>
-              <Text style={styles.aotd}>this is the previous adventure</Text> 
-              <TouchableOpacity  style={styles.button1} onPress={() => router.replace("/reflect")}>
-              <Text style={styles.aotd}>Sucess</Text> 
-                      </TouchableOpacity>
-              <TouchableOpacity  style={styles.button2} onPress={() => router.replace("/reflect")}>
-              <Text style={styles.aotd}>[SKIP]</Text> 
-                      </TouchableOpacity>
-
-  
-              
-            </View>
-            <View style={styles.newcontainer}>
-              <Text style={styles.smalltext}>tip: {randomTip}</Text>
-            </View>
-            
-          </ImageBackground>
-        </View>
-      </SafeAreaView>
-    );
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ImageBackground
+          source={randomImage}
+          style={styles.image}
+          resizeMode="cover"
+        >
+          <View style={styles.container}>
+            <Text style={styles.text}>How did your adventure go?</Text>
+            <Text style={styles.aotd}>this is the previous adventure</Text>
+            <TouchableOpacity
+              style={styles.button1}
+              onPress={() => router.replace("/reflect")}
+            >
+              <Text style={styles.aotd}>Sucess</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={() => router.replace("/reflect")}
+            >
+              <Text style={styles.aotd}>[SKIP]</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.newcontainer}>
+            <Text style={styles.smalltext}>tip: {randomTip}</Text>
+          </View>
+        </ImageBackground>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "JustAnotherHand",
   },
-  aotd:{
+  aotd: {
     color: "white",
     opacity: 0.8,
     fontSize: 30,
@@ -126,24 +128,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     fontFamily: "JustAnotherHand",
-   
   },
-    button1: {
-      alignItems: 'center',
-      backgroundColor: '#00B972',
-      padding: 20,
-      borderRadius: 10,
-      
-      
-    },
-    button2: {
-      alignItems: 'center',
-      padding: 10,
-      borderRadius: 10,
-      
-      
-    },
-
-
-  
+  button1: {
+    alignItems: "center",
+    backgroundColor: "#00B972",
+    padding: 20,
+    borderRadius: 10,
+  },
+  button2: {
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 10,
+  },
 });
