@@ -10,6 +10,7 @@ import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
+  const [adventures, setAdventures] = useState<any[]>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -19,7 +20,7 @@ export default function HomeScreen() {
           setOnboard(value === "true" ? true : false);
         }
       } catch (e) {
-        console.log(e);
+        console.log({ AsyncStorage: e });
       }
     };
 
@@ -62,7 +63,7 @@ export default function HomeScreen() {
         <Text
           style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
         >
-          Log
+          {adventures.toString()}
         </Text>
       </View>
       <View
@@ -97,17 +98,6 @@ export default function HomeScreen() {
             }}
           >
             _______________________________________
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/reflect")}>
-          <Text
-            style={{
-              marginHorizontal: 8,
-              color: colors.dark.textTint,
-              fontFamily: "ComfortaaBold",
-            }}
-          >
-            *************************************
           </Text>
         </TouchableOpacity>
       </View>

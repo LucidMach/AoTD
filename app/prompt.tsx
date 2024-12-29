@@ -1,5 +1,7 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
+import { adventuresTable } from "@/db/schema";
+import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   View,
@@ -10,12 +12,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import * as SQLite from "expo-sqlite";
-
 export default function PromptScreen() {
   const [adventure, setAdventure] = useState<string>();
-
-  useEffect(() => {}, [adventure]);
 
   const backgroundImages = [
     require("@/assets/images/morning/0.jpg"),
@@ -50,8 +48,10 @@ export default function PromptScreen() {
           <View style={styles.container}>
             <Text style={styles.text}>What is your adventure today?</Text>
             <TextInput
-              value={adventure}
-              onChangeText={setAdventure}
+              onSubmitEditing={(event) => {
+                setAdventure(event.nativeEvent.text);
+                router.push("/");
+              }}
               style={{
                 fontFamily: "ComfertaaLight",
                 color: colors.dark.text,
@@ -62,13 +62,10 @@ export default function PromptScreen() {
                 textAlign: "center",
               }}
             />
-
-            
           </View>
           <View style={styles.newcontainer}>
             <Text style={styles.smalltext}>tip: {randomTip}</Text>
           </View>
-          
         </ImageBackground>
       </View>
     </SafeAreaView>
@@ -126,3 +123,6 @@ const styles = StyleSheet.create({
     fontFamily: "JustAnotherHand",
   },
 });
+function useMigrations(db: any, migrations: any): { success: any; error: any } {
+  throw new Error("Function not implemented.");
+}

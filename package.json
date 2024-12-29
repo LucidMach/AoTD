@@ -43,9 +43,7 @@
     "@react-native-community/datetimepicker": "8.2.0",
     "expo-notifications": "~0.29.11",
     "expo-device": "~7.0.1",
-    "@react-native-async-storage/async-storage": "1.23.1",
-    "@shopify/flash-list": "1.7.1",
-    "expo-sqlite": "~15.0.4"
+    "@react-native-async-storage/async-storage": "1.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
