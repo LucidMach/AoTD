@@ -1,5 +1,6 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
+import { router } from "expo-router";
 import { useMemo } from "react";
 import {
   View,
@@ -7,16 +8,17 @@ import {
   ImageBackground,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PromptScreen() {
   const backgroundImages = [
-    require("@/assets/images/morning/0.jpg"),
-    require("@/assets/images/morning/2.jpg"),
-    require("@/assets/images/morning/3.jpg"),
-    require("@/assets/images/morning/4.jpg"),
-    require("@/assets/images/morning/5.jpg"),
+    require("@/assets/images/evening/0.jpg"),
+    require("@/assets/images/evening/2.jpg"),
+    require("@/assets/images/evening/3.jpg"),
+    require("@/assets/images/evening/4.jpg"),
+    require("@/assets/images/evening/5.jpg"),
   ];
   const randomImage = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
@@ -28,42 +30,45 @@ export default function PromptScreen() {
     const randomIndex = Math.floor(Math.random() * qoutes.length);
     return qoutes[randomIndex];
   }, []);
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ImageBackground
-          source={randomImage}
-          style={styles.image}
-          resizeMode="cover"
-        >
-          <View style={styles.container}>
-            <Text style={styles.text}>How did your adventure go?</Text>
-            <Text style={styles.aotd}>this is the previous adventure</Text>
-            <Text style={styles.smalltext}>tip: {randomTip}</Text>
-          </View>
-        </ImageBackground>
-      </View>
-    </SafeAreaView>
-  );
+
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}
+      >
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ImageBackground
+            source={randomImage}
+            style={styles.image}
+            resizeMode="cover"
+          >
+            <View style={styles.container}>
+              <Text style={styles.text}>How did your adventure go?</Text>
+              <Text style={styles.aotd}>this is the previous adventure</Text> 
+              <TouchableOpacity  style={styles.button1} onPress={() => router.replace("/reflect")}>
+              <Text style={styles.aotd}>Sucess</Text> 
+                      </TouchableOpacity>
+              <TouchableOpacity  style={styles.button2} onPress={() => router.replace("/reflect")}>
+              <Text style={styles.aotd}>[SKIP]</Text> 
+                      </TouchableOpacity>
+
+  
+              
+            </View>
+            <View style={styles.newcontainer}>
+              <Text style={styles.smalltext}>tip: {randomTip}</Text>
+            </View>
+            
+          </ImageBackground>
+        </View>
+      </SafeAreaView>
+    );
 }
+
 const styles = StyleSheet.create({
   fullcontainer: {
     flexDirection: "column",
-  },
-  aotd:{
-    color: "white",
-    opacity: 0.7,
-    fontSize: 18,
-    textShadowColor: "black",
-    textShadowRadius: 10,
-    fontWeight: "bold",
-    textAlign: "center",
-
-
   },
   container: {
     flexDirection: "column",
@@ -112,4 +117,33 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "JustAnotherHand",
   },
+  aotd:{
+    color: "white",
+    opacity: 0.8,
+    fontSize: 30,
+    textShadowColor: "black",
+    textShadowRadius: 10,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "JustAnotherHand",
+   
+  },
+    button1: {
+      alignItems: 'center',
+      backgroundColor: '#00B972',
+      padding: 20,
+      borderRadius: 10,
+      
+      
+    },
+    button2: {
+      alignItems: 'center',
+      padding: 10,
+      borderRadius: 10,
+      
+      
+    },
+
+
+  
 });
