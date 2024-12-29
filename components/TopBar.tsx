@@ -1,12 +1,40 @@
 import { colors } from "@/constants/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import SVG, { Path } from "react-native-svg";
 
 const TopBar: React.FC = () => {
   const [streak, setStreak] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("streak");
+        if (value !== null) {
+          setStreak(parseInt(value));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    const storeData = async (value: number) => {
+      try {
+        await AsyncStorage.setItem("streak", value.toString());
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    storeData(streak);
+  }, [streak]);
 
   return (
     <View
