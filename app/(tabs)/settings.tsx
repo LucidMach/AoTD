@@ -105,10 +105,20 @@ const Settings: React.FC = () => {
               textAlign: "center",
               fontFamily: "JustAnotherHand",
               fontSize: 40,
-              letterSpacing: 5,
             }}
           >
-            Daily Adventures
+            #AoTD
+          </Text>
+          <Text
+            style={{
+              color: colors.dark.textTint,
+              textAlign: "center",
+              fontFamily: "JustAnotherHand",
+              fontSize: 24,
+              letterSpacing: 2,
+            }}
+          >
+            Adventure Of The Day
           </Text>
         </View>
         <View style={{ gap: 8 }}>
