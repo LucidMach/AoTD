@@ -1,6 +1,6 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import * as SQLite from "expo-sqlite";
+
 export default function PromptScreen() {
+  const [adventure, setAdventure] = useState<string>();
+
+  useEffect(() => {}, [adventure]);
+
   const backgroundImages = [
     require("@/assets/images/morning/0.jpg"),
     require("@/assets/images/morning/2.jpg"),
@@ -25,9 +31,10 @@ export default function PromptScreen() {
 
   // Randomize quote
   const randomTip = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const randomIndex = Math.floor(Math.random() * qoutes.length);
     return qoutes[randomIndex];
   }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -43,6 +50,8 @@ export default function PromptScreen() {
           <View style={styles.container}>
             <Text style={styles.text}>What is your adventure today?</Text>
             <TextInput
+              value={adventure}
+              onChangeText={setAdventure}
               style={{
                 fontFamily: "ComfertaaLight",
                 color: colors.dark.text,
