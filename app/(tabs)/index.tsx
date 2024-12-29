@@ -5,6 +5,7 @@ import { colors } from "@/constants/colors";
 import { useEffect, useState } from "react";
 import { View, Text, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
@@ -37,7 +38,7 @@ export default function HomeScreen() {
   }, [onboard]);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         alignItems: "center",
@@ -63,6 +64,6 @@ export default function HomeScreen() {
           Log
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

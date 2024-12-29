@@ -3,6 +3,7 @@ import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
 import schedulePushNotification from "@/hooks/schedulePushNotification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import React, { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
@@ -70,7 +71,7 @@ const Settings: React.FC = () => {
   }, [eveningTime]);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         backgroundColor: colors.dark.background,
         flex: 1,
@@ -147,7 +148,7 @@ const Settings: React.FC = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

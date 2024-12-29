@@ -1,10 +1,11 @@
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
 import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Streak() {
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         alignItems: "center",
@@ -25,6 +26,6 @@ export default function Streak() {
           rules
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

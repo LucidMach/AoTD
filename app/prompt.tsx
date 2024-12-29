@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 
 export default function PromptScreen() {
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         alignItems: "center",
@@ -23,6 +23,6 @@ export default function PromptScreen() {
           Prompt
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
