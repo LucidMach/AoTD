@@ -2,25 +2,37 @@ import OnBoard from "@/components/OnBoard";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
 import adventure from "@/interfaces/adventure";
-import fetchOnboardData from "@/hooks/fetchOnboardData";
-import loadAdventuresData from "@/hooks/fetchAdventuresData";
+import loadOnboardData from "@/hooks/loadOnboardData";
+import loadAdventuresData from "@/hooks/loadAdventuresData";
 
 import { useEffect, useState } from "react";
 import { View, Text, Modal, TouchableOpacity, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import memory from "@/interfaces/memory";
+import loadMemoriesData from "@/hooks/loadMemoriesData";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
   const [adventures, setAdventures] = useState<adventure[]>([]);
   const [aotd, setAotd] = useState<adventure>();
+  const [memories, setMemories] = useState<memory[]>([]);
 
   useEffect(() => {
     const getData = async () => {
-      await fetchOnboardData(setOnboard);
-      const data = await loadAdventuresData(setAdventures, adventures);
-      console.log(data);
+      // to clean memoriesV
+      // await AsyncStorage.setItem("memories", JSON.stringify([]));
+
+      // to clean adventures
+      // await AsyncStorage.setItem("adventures", JSON.stringify([]));
+
+      await loadOnboardData(setOnboard);
+      const adventureData = await loadAdventuresData(setAdventures, adventures);
+      const memoryData = await loadMemoriesData(setMemories, memories);
+
+      console.log(adventureData);
+      console.log(memoryData);
     };
 
     // get some data from asyncStorage
@@ -82,6 +94,23 @@ export default function HomeScreen() {
                 <Text style={{ color: colors.dark.text }}>
                   {item.adventure}
                 </Text>
+              );
+            }}
+          />
+        </Text>
+        <Text
+          style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
+        >
+          #MoTD
+        </Text>
+        <Text
+          style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
+        >
+          <FlatList
+            data={memories}
+            renderItem={({ item }) => {
+              return (
+                <Text style={{ color: colors.dark.text }}>{item.memory}</Text>
               );
             }}
           />

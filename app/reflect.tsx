@@ -1,7 +1,11 @@
+import MemoryInput from "@/components/MemoryInput";
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
-import loadAdventuresData from "@/hooks/fetchAdventuresData";
+import loadAdventuresData from "@/hooks/loadAdventuresData";
+import loadMemoriesData from "@/hooks/loadMemoriesData";
 import adventure from "@/interfaces/adventure";
+import memory from "@/interfaces/memory";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -9,14 +13,49 @@ import {
   Text,
   ImageBackground,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
+// todo update adventures when aotd get updated
 export default function PromptScreen() {
-  const [adventures, setAdventures] = useState<adventure[]>([]);
+  const [pageNO, setPageNo] = useState<number>(0);
+  const [adventures, setAdventures] = useState<adventure[]>([]); // for AoTD
   const [aotd, setAotd] = useState<adventure>();
+
+  const [memory, setMemory] = useState<string>();
+
+  // store adventure in async storage
+  useEffect(() => {
+    const storeData = async () => {
+      if (memory) {
+        try {
+          const data = await AsyncStorage.getItem("memories");
+
+          const timestamp = new Date().getTime();
+          const newMemory: memory = {
+            timestamp,
+            memory,
+          };
+
+          if (data) {
+            const memories: memory[] = JSON.parse(data);
+
+            await AsyncStorage.setItem(
+              "memories",
+              JSON.stringify([...memories, newMemory])
+            );
+          } else {
+            await AsyncStorage.setItem("memories", JSON.stringify([newMemory]));
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    storeData();
+  }, [memory]);
 
   useEffect(() => {
     const getData = async () => {
@@ -46,6 +85,13 @@ export default function PromptScreen() {
     require("@/assets/images/evening/5.jpg"),
   ];
 
+  const today = useMemo(() => {
+    if (aotd) {
+      const datetime = new Date(aotd.timestamp);
+      return datetime;
+    }
+  }, [aotd]);
+
   const randomImage = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
     return backgroundImages[randomIndex];
@@ -58,7 +104,7 @@ export default function PromptScreen() {
   }, []);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
       }}
@@ -70,79 +116,152 @@ export default function PromptScreen() {
           resizeMode="cover"
         >
           <View style={styles.container}>
-            <Text
-              style={{
-                color: colors.dark.text,
-                fontSize: 42,
-                fontWeight: "bold",
-                textAlign: "center",
-                fontFamily: "JustAnotherHand",
-                margin: -8,
-              }}
-            >
-              How did your adventure go?
-            </Text>
-            <Text
-              style={{
-                color: colors.dark.text,
-                opacity: 0.8,
-                fontSize: 16,
-                textShadowColor: "black",
-                textShadowRadius: 10,
-                textAlign: "center",
-              }}
-            >
-              [{aotd?.adventure}]
-            </Text>
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                backgroundColor: "#00B972",
-                paddingHorizontal: 30,
-                paddingVertical: 10,
-                marginTop: 8,
-                borderRadius: 10,
-              }}
-              onPress={() => router.replace("/reflect")}
-            >
-              <Text
-                style={{
-                  color: colors.dark.text,
-                  fontSize: 16,
-                  fontFamily: "ComfortaaLight",
-                  textShadowColor: "black",
-                  textShadowRadius: 10,
-                  textAlign: "center",
-                }}
-              >
-                sucess
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button2}
-              onPress={() => router.replace("/reflect")}
-            >
-              <Text
-                style={{
-                  color: colors.dark.text,
-                  opacity: 0.8,
-                  fontSize: 24,
-                  textShadowColor: "black",
-                  textShadowRadius: 10,
-                  textAlign: "center",
-                  fontFamily: "JustAnotherHand",
-                }}
-              >
-                [skip]
-              </Text>
-            </TouchableOpacity>
+            {pageNO === 0 ? (
+              <View>
+                <Text
+                  style={{
+                    color: colors.dark.text,
+                    fontSize: 42,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    fontFamily: "JustAnotherHand",
+                    margin: -8,
+                  }}
+                >
+                  How did your adventure go?
+                </Text>
+                <Text
+                  style={{
+                    color: colors.dark.text,
+                    opacity: 0.8,
+                    fontSize: 16,
+                    textShadowColor: "black",
+                    textShadowRadius: 10,
+                    textAlign: "center",
+                  }}
+                >
+                  [{aotd?.adventure}]
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    alignItems: "center",
+                    backgroundColor: "#00B972",
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
+                    marginTop: 8,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => {
+                    aotd &&
+                      setAotd((aotd) => {
+                        if (aotd)
+                          return {
+                            timestamp: aotd?.timestamp,
+                            completed: true,
+                            adventure: aotd?.adventure,
+                          };
+                      });
+                    setPageNo(1);
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: colors.dark.text,
+                      fontSize: 16,
+                      fontFamily: "ComfortaaLight",
+                      textShadowColor: "black",
+                      textShadowRadius: 10,
+                      textAlign: "center",
+                    }}
+                  >
+                    success
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    alignItems: "center",
+                    padding: 8,
+                  }}
+                  onPress={() => setPageNo(1)}
+                >
+                  <Text
+                    style={{
+                      color: colors.dark.text,
+                      opacity: 0.8,
+                      fontSize: 20,
+                      textShadowColor: "black",
+                      textShadowRadius: 10,
+                      textAlign: "center",
+                      fontFamily: "JustAnotherHand",
+                    }}
+                  >
+                    [skip]
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View>
+                <Text
+                  style={{
+                    color: colors.dark.text,
+                    opacity: 0.8,
+                    fontSize: 16,
+                    textShadowColor: "black",
+                    textShadowRadius: 10,
+                    textAlign: "center",
+                  }}
+                >
+                  {today?.getDate()}/{today?.getMonth()}/{today?.getFullYear()}
+                </Text>
+                <Text
+                  style={{
+                    color: colors.dark.text,
+                    fontSize: 42,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    fontFamily: "JustAnotherHand",
+                    margin: -8,
+                  }}
+                >
+                  the most memorable thing today..?
+                </Text>
+                <Text
+                  style={{
+                    color: colors.dark.text,
+                    opacity: 0.8,
+                    fontSize: 16,
+                    textShadowColor: "black",
+                    textShadowRadius: 10,
+                    textAlign: "center",
+                  }}
+                >
+                  [{aotd?.adventure}]
+                </Text>
+                <TextInput
+                  onSubmitEditing={(event) => {
+                    console.log(event.nativeEvent.text);
+                    setMemory(event.nativeEvent.text);
+                    router.push("/");
+                  }}
+                  style={{
+                    fontFamily: "ComfertaaLight",
+                    color: colors.dark.text,
+                    borderBottomWidth: 1,
+                    borderColor: colors.dark.text,
+                    minWidth: 320,
+                    marginBottom: 8,
+                    textAlign: "center",
+                  }}
+                />
+              </View>
+            )}
           </View>
           <View style={styles.newcontainer}>
             <Text style={styles.smalltext}>tip: {randomTip}</Text>
           </View>
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -152,8 +271,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "column",
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingHorizontal: 32,
+    paddingTop: 24,
     borderRadius: 16,
     boxShadow:
       "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
@@ -164,6 +283,7 @@ const styles = StyleSheet.create({
   newcontainer: {
     flexDirection: "column",
     paddingHorizontal: 24,
+    marginHorizontal: 16,
     paddingVertical: 16,
     borderRadius: 16,
     boxShadow:
@@ -189,10 +309,5 @@ const styles = StyleSheet.create({
     textShadowRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  button2: {
-    alignItems: "center",
-    padding: 10,
-    borderRadius: 10,
   },
 });

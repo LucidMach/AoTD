@@ -11,10 +11,8 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PromptScreen() {
-  const [pageNO, setPageNo] = useState<number>(0);
   const [adventure, setAdventure] = useState<string>();
 
   // store adventure in async storage
@@ -24,21 +22,24 @@ export default function PromptScreen() {
         try {
           const data = await AsyncStorage.getItem("adventures");
 
+          const timestamp = new Date().getTime();
+          const newAdventure: adventure = {
+            timestamp,
+            adventure,
+            completed: false,
+          };
+
           if (data) {
-            const timestamp = new Date().getTime();
             const adventures: adventure[] = JSON.parse(data);
+
             await AsyncStorage.setItem(
               "adventures",
-              JSON.stringify([...adventures, { timestamp, adventure }])
+              JSON.stringify([...adventures, newAdventure])
             );
           } else {
-            const adventureItem: adventure = {
-              timestamp: new Date().getTime(),
-              adventure,
-            };
             await AsyncStorage.setItem(
               "adventures",
-              JSON.stringify([adventureItem])
+              JSON.stringify([newAdventure])
             );
           }
         } catch (e) {
@@ -69,7 +70,7 @@ export default function PromptScreen() {
   }, []);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
       }}
@@ -103,7 +104,7 @@ export default function PromptScreen() {
           </View>
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 const styles = StyleSheet.create({

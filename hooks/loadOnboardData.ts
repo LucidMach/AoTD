@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-async function fetchOnboardData(
+async function loadOnboardData(
   setOnboard: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   try {
@@ -13,4 +13,4 @@ async function fetchOnboardData(
   }
 }
 
-export default fetchOnboardData;
+export default loadOnboardData;
