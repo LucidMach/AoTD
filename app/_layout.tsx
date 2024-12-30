@@ -5,7 +5,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
+
 import * as Notifications from "expo-notifications";
+
+import { db } from "@/db/client";
+import migrations from "@/drizzle/migrations";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -49,10 +54,8 @@ function useNotificationObserver() {
   }, []);
 }
 
-export default function RootLayout() {
-  useNotificationObserver();
-
-  const [loaded] = useFonts({
+function useLoadAssets() {
+  const [hasLoadedFonts, loadingFontsError] = useFonts({
     JustAnotherHand: require("../assets/fonts/JustAnotherHand-Regular.ttf"),
     ComfortaaLight: require("../assets/fonts/Comfortaa-Light.ttf"),
     ComfortaaRegular: require("../assets/fonts/Comfortaa-Regular.ttf"),
@@ -61,15 +64,28 @@ export default function RootLayout() {
     ComfortaaBold: require("../assets/fonts/Comfortaa-Bold.ttf"),
   });
 
+  const { success: hasRunMigrations, error: runningMigrationError } =
+    useMigrations(db, migrations);
+
   useEffect(() => {
-    if (loaded) {
+    if (loadingFontsError) throw loadingFontsError;
+    if (runningMigrationError) throw runningMigrationError;
+  }, [loadingFontsError, runningMigrationError]);
+
+  useEffect(() => {
+    if (hasLoadedFonts && hasRunMigrations) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [hasLoadedFonts, hasRunMigrations]);
 
-  if (!loaded) {
-    return null;
-  }
+  return { isLoaded: hasLoadedFonts && hasRunMigrations };
+}
+
+export default function RootLayout() {
+  useNotificationObserver();
+
+  const { isLoaded } = useLoadAssets();
+  if (!isLoaded) return null;
 
   return (
     <ThemeProvider value={DarkTheme}>

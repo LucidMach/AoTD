@@ -1,6 +1,7 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
 import { adventuresTable } from "@/db/schema";
+
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -123,6 +124,3 @@ const styles = StyleSheet.create({
     fontFamily: "JustAnotherHand",
   },
 });
-function useMigrations(db: any, migrations: any): { success: any; error: any } {
-  throw new Error("Function not implemented.");
-}
