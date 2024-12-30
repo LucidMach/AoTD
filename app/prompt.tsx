@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PromptScreen() {
+  const [pageNO, setPageNo] = useState<number>(0);
   const [adventure, setAdventure] = useState<string>();
 
   // store adventure in async storage
@@ -24,10 +25,11 @@ export default function PromptScreen() {
           const data = await AsyncStorage.getItem("adventures");
 
           if (data) {
+            const timestamp = new Date().getTime();
             const adventures: adventure[] = JSON.parse(data);
             await AsyncStorage.setItem(
               "adventures",
-              JSON.stringify([...adventures, adventure])
+              JSON.stringify([...adventures, { timestamp, adventure }])
             );
           } else {
             const adventureItem: adventure = {

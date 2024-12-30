@@ -9,6 +9,7 @@ async function loadAdventuresData(
     const data = await AsyncStorage.getItem("adventures");
     if (data) {
       setAdventures(JSON.parse(data));
+      return adventures;
     }
   } catch (e) {
     console.log({ adventures: e });

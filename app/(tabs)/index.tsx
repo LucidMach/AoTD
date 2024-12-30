@@ -19,7 +19,8 @@ export default function HomeScreen() {
   useEffect(() => {
     const getData = async () => {
       await fetchOnboardData(setOnboard);
-      await loadAdventuresData(setAdventures, adventures);
+      const data = await loadAdventuresData(setAdventures, adventures);
+      console.log(data);
     };
 
     // get some data from asyncStorage
