@@ -1,6 +1,7 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
-import { adventuresTable } from "@/db/schema";
+import adventure from "@/interfaces/adventure";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -14,6 +15,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PromptScreen() {
   const [adventure, setAdventure] = useState<string>();
+
+  // store adventure in async storage
+  useEffect(() => {
+    const storeData = async () => {
+      if (adventure) {
+        try {
+          const data = await AsyncStorage.getItem("adventures");
+
+          if (data) {
+            const adventures: adventure[] = JSON.parse(data);
+            await AsyncStorage.setItem(
+              "adventures",
+              JSON.stringify([...adventures, adventure])
+            );
+          } else {
+            const adventureItem: adventure = {
+              timestamp: new Date().getTime(),
+              adventure,
+            };
+            await AsyncStorage.setItem(
+              "adventures",
+              JSON.stringify([adventureItem])
+            );
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    storeData();
+  }, [adventure]);
 
   const backgroundImages = [
     require("@/assets/images/morning/0.jpg"),
@@ -82,18 +115,19 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     boxShadow:
       "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
-    backgroundColor: "rgba(0, 0, 0, 0.26)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     alignItems: "center",
     justifyContent: "center",
   },
   newcontainer: {
     flexDirection: "column",
     paddingHorizontal: 24,
+    marginHorizontal: 16,
     paddingVertical: 16,
     borderRadius: 16,
     boxShadow:
       "2px 2px 2px rgba(0, 0, 0, 0.21), inset 2px 2px 2px rgba(255, 255, 255, .25)",
-    backgroundColor: "rgba(0, 0, 0, 0.26)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     position: "absolute",
     bottom: 0,

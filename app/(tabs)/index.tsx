@@ -1,32 +1,43 @@
 import OnBoard from "@/components/OnBoard";
 import TopBar from "@/components/TopBar";
 import { colors } from "@/constants/colors";
+import adventure from "@/interfaces/adventure";
+import fetchOnboardData from "@/hooks/fetchOnboardData";
+import loadAdventuresData from "@/hooks/fetchAdventuresData";
 
 import { useEffect, useState } from "react";
-import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { View, Text, Modal, TouchableOpacity, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
-  const [adventures, setAdventures] = useState<any[]>([]);
+  const [adventures, setAdventures] = useState<adventure[]>([]);
+  const [aotd, setAotd] = useState<adventure>();
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem("onboard");
-        if (value !== null) {
-          setOnboard(value === "true" ? true : false);
-        }
-      } catch (e) {
-        console.log({ AsyncStorage: e });
-      }
+      await fetchOnboardData(setOnboard);
+      await loadAdventuresData(setAdventures, adventures);
     };
 
+    // get some data from asyncStorage
     getData();
   }, []);
 
+  useEffect(() => {
+    // set AoTD
+    adventures.forEach((adventure) => {
+      const adventureDay = new Date(adventure.timestamp).getDate();
+      const today = new Date().getDate();
+      if (today === adventureDay) {
+        setAotd(adventure);
+      }
+    });
+  }, [adventures]);
+
+  // store onboard status on asyncStorage
   useEffect(() => {
     const storeData = async (value: boolean) => {
       try {
@@ -63,7 +74,16 @@ export default function HomeScreen() {
         <Text
           style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
         >
-          {adventures.toString()}
+          <FlatList
+            data={adventures}
+            renderItem={({ item }) => {
+              return (
+                <Text style={{ color: colors.dark.text }}>
+                  {item.adventure}
+                </Text>
+              );
+            }}
+          />
         </Text>
       </View>
       <View
@@ -89,17 +109,35 @@ export default function HomeScreen() {
         >
           Today
         </Text>
-        <TouchableOpacity onPress={() => router.push("/prompt")}>
-          <Text
-            style={{
-              marginHorizontal: 8,
-              color: colors.dark.textTint,
-              fontFamily: "ComfortaaBold",
-            }}
+        {aotd ? (
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => router.push("/reflect")}
           >
-            _______________________________________
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                textAlign: "center",
+                marginHorizontal: 8,
+                color: colors.dark.textTint,
+                fontFamily: "ComfortaaBold",
+              }}
+            >
+              {aotd.adventure}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => router.push("/prompt")}>
+            <Text
+              style={{
+                marginHorizontal: 8,
+                color: colors.dark.textTint,
+                fontFamily: "ComfortaaBold",
+              }}
+            >
+              _______________________________________
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );
