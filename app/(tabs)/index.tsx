@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import memory from "@/interfaces/memory";
 import loadMemoriesData from "@/hooks/loadMemoriesData";
+import { SCREEN_WIDTH } from "@/constants/screenDims";
 
 export default function HomeScreen() {
   const [onboard, setOnboard] = useState<boolean>(true);
@@ -77,44 +78,41 @@ export default function HomeScreen() {
           <OnBoard setOnboard={setOnboard} />
         </Modal>
       )}
-      <TopBar />
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
-        >
-          #AoTD
-        </Text>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
-        >
-          <FlatList
-            data={adventures}
-            renderItem={({ item }) => {
-              return (
-                <Text style={{ color: colors.dark.text }}>
-                  {item.adventure}
-                </Text>
-              );
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <TopBar />
+        <View style={{ alignItems: "center" }}>
+          <Text
+            style={{
+              color: colors.dark.text,
+              fontSize: 24,
+              fontFamily: "ComfortaaRegular",
             }}
-          />
-        </Text>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "JustAnotherHand" }}
-        >
-          #MoTD
-        </Text>
-        <Text
-          style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
-        >
+          >
+            log of memories
+          </Text>
+          <Text
+            style={{ color: colors.dark.text, fontFamily: "ComfortaaRegular" }}
+          >
+            all your memories logged will appear here
+          </Text>
           <FlatList
+            style={{ margin: 16, width: SCREEN_WIDTH, flexGrow: 0 }}
             data={memories}
             renderItem={({ item }) => {
+              const day = new Date(item.timestamp);
               return (
-                <Text style={{ color: colors.dark.text }}>{item.memory}</Text>
+                <View style={{ flexDirection: "row", gap: 8 }}>
+                  <Text style={{ color: colors.dark.text }}>
+                    {day.getDate()} / {day.getMonth()} / {day.getFullYear()}
+                  </Text>
+                  <Text style={{ color: colors.dark.textTint }}>
+                    {item.memory}
+                  </Text>
+                </View>
               );
             }}
           />
-        </Text>
+        </View>
       </View>
       <View
         style={{

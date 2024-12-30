@@ -1,5 +1,6 @@
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
+import { SCREEN_WIDTH } from "@/constants/screenDims";
 import adventure from "@/interfaces/adventure";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -93,7 +94,7 @@ export default function PromptScreen() {
                 color: colors.dark.text,
                 borderBottomWidth: 1,
                 borderColor: colors.dark.text,
-                width: 300,
+                width: SCREEN_WIDTH,
                 marginBottom: 8,
                 textAlign: "center",
               }}

@@ -1,6 +1,7 @@
 import MemoryInput from "@/components/MemoryInput";
 import { colors } from "@/constants/colors";
 import { qoutes } from "@/constants/qoutes";
+import { SCREEN_WIDTH } from "@/constants/screenDims";
 import loadAdventuresData from "@/hooks/loadAdventuresData";
 import loadMemoriesData from "@/hooks/loadMemoriesData";
 import adventure from "@/interfaces/adventure";
@@ -248,7 +249,7 @@ export default function PromptScreen() {
                     color: colors.dark.text,
                     borderBottomWidth: 1,
                     borderColor: colors.dark.text,
-                    minWidth: 320,
+                    minWidth: SCREEN_WIDTH,
                     marginBottom: 8,
                     textAlign: "center",
                   }}
