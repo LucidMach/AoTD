@@ -45,8 +45,7 @@
             "./assets/fonts/Comfortaa-ExtraBold.ttf"
           ]
         }
-      ],
-      "expo-sqlite"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
