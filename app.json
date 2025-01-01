@@ -1,20 +1,22 @@
 {
   "expo": {
-    "name": "aotd",
-    "slug": "adventure_of_the_day",
+    "name": "adventure_of_the_day",
+    "slug": "aotd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icons/adaptive-icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "AoTD"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icons/adaptive-icon.png",
         "backgroundColor": "#1a1a1a"
-      }
+      },
+      "package": "com.lucidmach.aotd"
     },
     "web": {
       "bundler": "metro",
@@ -50,6 +52,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b0c3bff9-3d95-4865-8499-1a0cefffc334"
+      }
     }
   }
 }
