@@ -103,7 +103,7 @@ export default function HomeScreen() {
               return (
                 <View style={{ flexDirection: "row", gap: 8 }}>
                   <Text style={{ color: colors.dark.text }}>
-                    {day.getDate()} / {day.getMonth()} / {day.getFullYear()}
+                    {day.getDate()} / {day.getMonth()+1} / {day.getFullYear()}
                   </Text>
                   <Text style={{ color: colors.dark.textTint }}>
                     {item.memory}
