@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "adventure_of_the_day",
-    "slug": "aotd",
+    "name": "aotd",
+    "slug": "adventure_of_the_day",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icons/adaptive-icon.png",
@@ -43,8 +43,7 @@
             "./assets/fonts/Comfortaa-Bold.ttf",
             "./assets/fonts/Comfortaa-Light.ttf",
             "./assets/fonts/Comfortaa-Medium.ttf",
-            "./assets/fonts/Comfortaa-SemiBold.ttf",
-            "./assets/fonts/Comfortaa-ExtraBold.ttf"
+            "./assets/fonts/Comfortaa-SemiBold.ttf"
           ]
         }
       ]
