@@ -88,10 +88,12 @@ export default function PromptScreen() {
 
   const today = useMemo(() => {
     if (aotd) {
-      const datetime = new Date(aotd.timestamp);
+      const datetime = new Date(aotd.timestamp);  
+      
       return datetime;
     }
   }, [aotd]);
+ 
 
   const randomImage = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
@@ -212,7 +214,7 @@ export default function PromptScreen() {
                     textAlign: "center",
                   }}
                 >
-                  {today?.getDate()}/{today?.getMonth()}/{today?.getFullYear()}
+                  {today!.getDate()}/{today!.getMonth()+1}/{today!.getFullYear()}
                 </Text>
                 <Text
                   style={{
